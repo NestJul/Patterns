@@ -34,7 +34,7 @@ jobs:
         # имя файла SUT будет отличаться в каждой задаче.
         # & означает, что в фоновом режиме не блокируем терминал для запуска тестов, 
         # обязательно должен быть для запуска SUT в CI
-      run: java -jar ./artifacts/app-ibank.jar &
+      run: java -jar ./artifacts/app-replan-delivery.jar &
         
     - name: Build with Gradle Wrapper
       run: ./gradlew test -i -Dselenide.headless=true
