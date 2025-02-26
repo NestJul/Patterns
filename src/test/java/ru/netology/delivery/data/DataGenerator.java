@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import lombok.Value;
 import lombok.val;
 
+import java.sql.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -23,9 +24,57 @@ public class DataGenerator {
     }
 
     public static String generateCity(String locale) {
-        Faker faker = new Faker(new Locale(locale));
+        Random random = new Random();
+        String[] city = {
+                "Абакан",
+                "Анадырь",
+                "Архангельск",
+                "Астрахань",
+                "Барнаул",
+                "Белгород",
+                "Биробиджан",
+                "Благовещенск",
+                "Великий Новгород",
+                "Владивосток",
+                "Владикавказ",
+                "Волгоград",
+                "Воронеж",
+                "Горно-Алтайск",
+                "Екатеринбург",
+                "Иваново",
+                "Ижевск",
+                "Йошкар-Ола",
+                "Казань",
+                "Калининград",
+                "Киров",
+                "Кострома",
+                "Краснодар",
+                "Красноярск",
+                "Курган",
+                "Магадан",
+                "Магас",
+                "Майкоп",
+                "Махачкала",
+                "Москва",
+                "Мурманск",
+                "Нарьян-Мар",
+                "Нижний Новгород",
+                "Новосибирск",
+                "Орёл",
+                "Оренбург",
+                "Петропавловск-Камчатский",
+                "Ростов-на-Дону",
+                "Рязань",
+                "Санкт-Петербург",
+                "Саранск",
+                "Самара",
+                "Чебоксары",
+                "Ханты-Мансийск",
+                "Улан-Удэ",
+                "Южно-Сахалинск"
+        };
 
-        return faker.address().city();
+        return city[random.nextInt(city.length)];
     }
 
     public static String generateName(String locale) {

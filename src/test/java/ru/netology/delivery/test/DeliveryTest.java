@@ -31,28 +31,22 @@ class DeliveryTest {
         var secondMeetingDate = DataGenerator.generateDate(daysToAddForSecondMeeting);
 
         SelenideElement form = $("form");
-        boolean validCity = false;
-
-        while (!validCity) {
-            var validUser = DataGenerator.Registration.generateUser("ru");
-            eraseAndSendKeys(form.$("[data-test-id=city] input"), validUser.getCity());
-            eraseAndSendKeys(form.$("[data-test-id=date] input"), firstMeetingDate);
-            eraseAndSendKeys(form.$("[data-test-id=name] input"), validUser.getName()); //Использование Ё вызывает ошибку "используйте только русские буквы"
-            eraseAndSendKeys(form.$("[data-test-id=phone] input"), validUser.getPhone());
-            if (!form.$("[data-test-id=agreement] input").isSelected()) {
-                form.$("[data-test-id=agreement]").click();
-            }
-            form.$(By.className("button_theme_alfa-on-white")).click();
-            validCity = !form.$("[data-test-id=city] .input__sub").text().equals("Доставка в выбранный город недоступна");
-        }
+        var validUser = DataGenerator.Registration.generateUser("ru");
+        eraseAndSendKeys(form.$("[data-test-id=city] input"), validUser.getCity());
+        eraseAndSendKeys(form.$("[data-test-id=date] input"), firstMeetingDate);
+        eraseAndSendKeys(form.$("[data-test-id=name] input"), validUser.getName()); //Использование Ё вызывает ошибку "используйте только русские буквы"
+        eraseAndSendKeys(form.$("[data-test-id=phone] input"), validUser.getPhone());
+        form.$("[data-test-id=agreement]").click();
+        form.$(By.className("button_theme_alfa-on-white")).click();
         $("[data-test-id=success-notification]").shouldBe(visible, Duration.ofSeconds(15));
-        $("[data-test-id=success-notification] .notification__title").shouldHave(text("Успешно!"));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text(firstMeetingDate));
         eraseAndSendKeys(form.$("[data-test-id=date] input"), secondMeetingDate);
         form.$(By.className("button_theme_alfa-on-white")).click();
         SelenideElement buttonReplan = $("[data-test-id=replan-notification] .button__text");
         buttonReplan.shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Перепланировать"));
         buttonReplan.click();
-        $("[data-test-id=success-notification] .notification__title").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text("Успешно!"));
+        $("[data-test-id=success-notification] .notification__title").shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text(secondMeetingDate));
     }
 
     private void eraseAndSendKeys(SelenideElement element, String data) {
